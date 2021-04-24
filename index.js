@@ -2,7 +2,8 @@
 
 let vacas = [{id: 1, valor: 6}, {id: 2, valor: 2}, {id: 3, valor: 7}, {id: 4, valor: 6}, {id: 5, valor: 8}];
 let toros = [{id: 1, valor: 10}];
-
+let restricao = 2;
+let custo = 0;
 //Criando arvore
 var TreeModel = require('tree-model'),
     tree = new TreeModel(),
@@ -27,9 +28,15 @@ let upperArray = [];
     vaca.filter(obj => {
         let media = (parseFloat(toros[0].valor) + parseFloat(obj.valor))/2;
         upperArray.push({id: obj.id, media: media});
+        
     })
 });
 
+// resultados upper bound 
+console.log(upperArray);
+
+// tem que exluir vaca 2 e 4
+  
 let arrayRemover = [];
 
 //Primeira rodada, vendo quais caminhos devem ser excluidos
@@ -44,11 +51,15 @@ for(let i = 0; i < upperArray.length; i++) {
          arrayRemover.push(vacaId);
     }
 }
-
+console.log(restricao);
+console.log(arrayRemover);
 console.log('upper: ' + upper);
 console.log('array remover: ' + arrayRemover);
 
+
 //Fazer lógica para removelos da arvore
+
+
 
 
 //** PENSAR EM ALGUMA REPETIÇÃO FOR, WHILE, ETC PRA QUE ISSO CONTEMPLE TD ARVORE*/
