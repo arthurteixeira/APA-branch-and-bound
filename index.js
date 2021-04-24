@@ -106,16 +106,56 @@ root.all().forEach(function (node) {
     })
 });
 
-console.log('1 nodo:')
+/*console.log('1 nodo:')
 console.log(root.children[0].model);
 
 console.log('2 nodo:')
 console.log(root.children[1].model);
 
 console.log('3 nodo:')
-console.log(root.children[2].model);
+console.log(root.children[2].model);*/
+////
+
+console.log(upperArray)
+
+let maiorArray = [];
+
+for (let i = 0; i < root.children.length; i++) {
+    let tamanho = root.children[i].model.children.length;
+    let maior = {id: null, valor: 0};
+
+    for(let j = 0; j < tamanho; j++) {
+        let id = root.children[i].model.children[j].id - 1;
+        if(id != undefined) {
+            if(upperArray[id].media > maior.valor) {
+                maior = {id: id+1, valor: upperArray[id].media};
+            }
+        }
+    }
+    maiorArray.push(maior);
+}
+
+let arrayCustos = [];
+let arrayIds = [];
 
 
+root.model.children.filter(obj => {
+    arrayIds.push(obj.model.id);
+});
 
-//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-//CHUPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+console.log(arrayIds)
+
+for (let i =0; i < arrayIds.length; i++) {
+    //console.log(maiorArray[i].valor);
+    //console.log(upperArray[arrayIds[i-1]].media);
+    //console.log(arrayIds[i]);
+    //console.log(upperArray[arrayIds[i]-1].id)
+    let custo = maiorArray[i].valor + upperArray[arrayIds[i]-1].media;
+    arrayCustos.push(custo);    
+}
+
+console.log('array');
+console.log(arrayCustos);
+
+console.log(maiorArray)
+console.log(arrayIds)
