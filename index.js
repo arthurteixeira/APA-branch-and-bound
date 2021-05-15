@@ -1,7 +1,9 @@
 //Tabelas sendo representadas como array de objetos
 
-let vacas = [{id: 1, valor: 6}, {id: 2, valor: 2}, {id: 3, valor: 7}, {id: 4, valor: 6}, {id: 5, valor: 8}];
+let vacas = [{id: 1, valor: 6}, {id: 2, valor: 2}, {id: 3, valor: 7}, {id: 4, valor: 6}, {id: 5, valor: 8}, {id: 6, valor: 10}, {id: 7, valor: 33}];
 let toros = [{id: 1, valor: 10}];
+
+
 let restricao = 2;
 let custo = 0;
 
@@ -9,19 +11,15 @@ let custo = 0;
 var TreeModel = require('tree-model'),
     tree = new TreeModel(),
     
-    vaca1 = tree.parse(vacas[0]);
-    vaca2 = tree.parse(vacas[1]);
-    vaca3 = tree.parse(vacas[2]);
-    vaca4 = tree.parse(vacas[3]);
-    vaca5 = tree.parse(vacas[4]);
+filhos = [];
 
-    root = tree.parse({id: '1', children: [
-        vaca1, 
-        vaca2,
-        vaca3,
-        vaca4,
-        vaca5,
-    ]});
+console.log('vacas length: ' + vacas.length);
+
+for(let i = 0; i < vacas.length; i++){
+    filhos.push(tree.parse(vacas[i]));
+}
+
+root = tree.parse({id: '1', children: filhos});
 
 console.log(root);
 
@@ -59,6 +57,8 @@ console.log(upperArray);
   
 let arrayRemover = [];
 
+/////////////////////////////////////////////////////////////
+
 //Primeira rodada, vendo quais caminhos devem ser excluidos
 for(let i = 0; i < upperArray.length; i++) {
     vacaValor = Object.values(upperArray[i])[1];
@@ -71,13 +71,7 @@ for(let i = 0; i < upperArray.length; i++) {
          arrayRemover.push(vacaId);
     }
 }
-
-//console.log(restricao);
-//console.log(arrayRemover);
-//console.log('upper: ' + upper);
 console.log('array remover: ' + arrayRemover);
-
-//console.log(tree);
 
 //Remover da arvora
 root.all().forEach(function (node) {
@@ -106,20 +100,11 @@ root.all().forEach(function (node) {
     })
 });
 
-/*console.log('1 nodo:')
-console.log(root.children[0].model);
-
-console.log('2 nodo:')
-console.log(root.children[1].model);
-
-console.log('3 nodo:')
-console.log(root.children[2].model);*/
-////
-
 console.log(upperArray)
 
 let maiorArray = [];
 
+//ESSA FUNÇÃO
 for (let i = 0; i < root.children.length; i++) {
     let tamanho = root.children[i].model.children.length;
     let maior = {id: null, valor: 0};
@@ -143,19 +128,44 @@ root.model.children.filter(obj => {
     arrayIds.push(obj.model.id);
 });
 
-console.log(arrayIds)
+
+
 
 for (let i =0; i < arrayIds.length; i++) {
-    //console.log(maiorArray[i].valor);
-    //console.log(upperArray[arrayIds[i-1]].media);
-    //console.log(arrayIds[i]);
-    //console.log(upperArray[arrayIds[i]-1].id)
     let custo = maiorArray[i].valor + upperArray[arrayIds[i]-1].media;
     arrayCustos.push(custo);    
 }
 
-console.log('array');
-console.log(arrayCustos);
+//console.log(arrayCustos);
 
-console.log(maiorArray)
-console.log(arrayIds)
+let segundaIds = [];
+
+for(let i = 0; i < maiorArray.length; i++){
+    segundaIds.push(maiorArray[i].id);
+}
+
+console.log('Primeira altura \n' + arrayIds)
+console.log('Segunda altura \n' + segundaIds)
+console.log('Custos \n' + arrayCustos)
+
+let indice = indexOfMax(arrayCustos);
+
+console.log('Touro: 1 | Vacas: ' + arrayIds[indice] + ' e ' + segundaIds[indice]);
+
+function indexOfMax(arr) {
+    if (arr.length === 0) {
+        return -1;
+    }
+
+    var max = arr[0];
+    var maxIndex = 0;
+
+    for (var i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            maxIndex = i;
+            max = arr[i];
+        }
+    }
+
+    return maxIndex;
+}
