@@ -1,7 +1,7 @@
 //Tabelas sendo representadas como array de objetos
 
-let vacas = [{id: 1, valor: 6}, {id: 2, valor: 2}, {id: 3, valor: 7}, {id: 4, valor: 6}, {id: 5, valor: 8}, {id: 6, valor: 10}, {id: 7, valor: 33}];
-let toros = [{id: 1, valor: 10}, {id: 2, valor: 8}];
+let vacas = [{id: 1, valor: 6}, {id: 2, valor: 2}, {id: 3, valor: 7}, {id: 4, valor: 6}, {id: 5, valor: 8}, {id: 6, valor: 10}, {id: 7, valor: 33}, {id: 8, valor: 38},  {id: 9, valor: 9}, {id: 10, valor:7}, {id: 11, valor: 28}];
+let toros = [{id: 1, valor: 10}, {id: 2, valor: 8}, {id: 3, valor: 30}, {id: 4, valor:25 }, {id: 5, valor:40 }];
 
 toros.sort((a,b) => {
     if (a.valor < b.valor)
@@ -77,21 +77,23 @@ for(let i = 0; i < upperArray.length; i++) {
         if (vacaId == vacasExcluidas[j]){
             arrayRemover.push(vacaId);
         }
-        //flagFor = true;
     }
+}
+console.log('array remover: ' + arrayRemover);
 
-    //if(flagFor == false){
+for(let i = 0; i < upperArray.length; i++) {
+    vacaValor = Object.values(upperArray[i])[1];
+    vacaId = Object.values(upperArray[i])[0]
+
+    if((vacasArray.length - arrayRemover.length) <= 2){
         if (vacaValor > upper) {
             upper = vacaValor;
         }
         else {
             arrayRemover.push(vacaId);
         }
-    //}
-
-    //flagFor = 0;
+    }
 }
-//console.log('array remover: ' + arrayRemover);
 
 //Remover da arvora
 root.all().forEach(function (node) {
@@ -141,6 +143,7 @@ for (let i = 0; i < root.children.length; i++) {
     for(let j = 0; j < tamanho; j++) {
         let id = root.children[i].model.children[j].id - 1;
         if(id != undefined) {
+            
             if(upperArray[id].media > maior.valor) {
                 maior = {id: id+1, valor: upperArray[id].media};
             }
@@ -186,7 +189,7 @@ console.log('Touro: ' + zindice + ' | Vacas: ' + arrayIds[indice] + ' e ' + segu
 vacasExcluidas.push(arrayIds[indice]);
 vacasExcluidas.push(segundaIds[indice]);
 
-//console.log('vacas excluidas ' + vacasExcluidas);
+console.log('vacas excluidas ' + vacasExcluidas);
 
 }
 function indexOfMax(arr) {
